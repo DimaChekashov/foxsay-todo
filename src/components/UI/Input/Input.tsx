@@ -4,7 +4,9 @@ import './Input.sass';
 
 interface Props {
     type: "text" | "number" | "password",
-    placeholder?: string
+    placeholder?: string,
+    value?: string,
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 function Input(props: Props) {

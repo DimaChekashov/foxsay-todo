@@ -4,7 +4,8 @@ import './Button.sass';
 
 interface Props {
     children: React.ReactNode,
-    disabled?: boolean
+    disabled?: boolean,
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 function Button({ children, ...props }: Props) {
