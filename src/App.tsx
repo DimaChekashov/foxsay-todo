@@ -12,19 +12,19 @@ function App() {
     {id: 2, title: "Javascript 2", body: "Description"},
     {id: 3, title: "Javascript 3", body: "Description"}
   ]);
-  const [title, setTitle] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
+  const [todo, setTodo] = useState<{ 
+    title: string, 
+    body: string 
+  }>({
+    title: "",
+    body: ""
+  });
 
   const addNewTodo = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const newTodo: ITodoItem = {
-      id: Date.now(),
-      title,
-      body: description
-    }
-
-    setTodos([...todos, newTodo]);
+    setTodos([...todos, {...todo, id: Date.now()}]);
+    setTodo({ title: "", body: "" });
   }
 
   return (
@@ -32,14 +32,14 @@ function App() {
       <div className="container">
         <form>
           <Input
-            value={title}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
+            value={todo.title}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTodo({ ...todo, title: e.target.value })}
             type="text" 
             placeholder="Todo title" 
           />
           <Input 
-            value={description}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
+            value={todo.body}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTodo({ ...todo, body: e.target.value })}
             type="text" 
             placeholder="Todo description" 
           />
