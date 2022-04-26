@@ -1,0 +1,18 @@
+.button
+    padding: 10px 15px
+    border: 0
+    cursor: pointer
+    background-color: var(--color-primary)
+    color: #ffffff
+    font-size: 1rem
+    line-height: 1.5
+    font-weight: 400
+    border-radius: 0.5em
+    text-decoration: none
+    transition: background-color 0.15s ease-in-out, transform 0.15s ease-in-out
+    &:hover
+        background-color: var(--color-primary-dark)
+    &:active
+        transform: scale(1.05)
+    &:disabled
+        opacity: 0.65

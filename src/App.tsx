@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import TodoItem from './components/TodoItem/TodoItem';
+import { ITodoItem } from './types/types';
 
 import './App.sass';
-import { ITodoItem } from './types/types';
+import TodoList from './components/TodoList/TodoList';
+import Button from './components/UI/Button/Button';
 
 function App() {
   const [todos, setTodos] = useState<ITodoItem[]>([
@@ -14,7 +15,13 @@ function App() {
   return (
     <div className="app">
       <div className="container">
-        {todos.map((todo) => <TodoItem key={todo.id} todo={todo} />)}
+        <form>
+          <input type="text" placeholder="Todo title" />
+          <input type="text" placeholder="Todo description" />
+          <Button>Create todo</Button>
+        </form>
+
+        <TodoList todos={todos} title="Todo List" />
       </div>
     </div>
   );
