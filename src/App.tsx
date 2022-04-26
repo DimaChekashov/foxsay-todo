@@ -17,6 +17,14 @@ function App() {
 
   const addNewTodo = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
+    const newTodo: ITodoItem = {
+      id: Date.now(),
+      title,
+      body: description
+    }
+
+    setTodos([...todos, newTodo]);
   }
 
   return (

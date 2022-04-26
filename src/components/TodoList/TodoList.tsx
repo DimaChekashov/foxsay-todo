@@ -13,7 +13,7 @@ function TodoList({ todos, title }: Props) {
   return (
     <>
         <h1 className="title">{title}</h1>
-        {todos.map((todo) => <TodoItem key={todo.id} todo={todo} />)}
+        {todos.map((todo, index) => <TodoItem number={++index} key={todo.id} todo={todo} />)}
     </>
   )
 }
