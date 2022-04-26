@@ -6,10 +6,10 @@ import Input from "../UI/Input/Input";
 import './TodoForm.sass';
 
 interface Props {
-  create: (newTodo: ITodoItem) => void
+  create: (newTodo: ITodoItem) => void;
 }
 
-function TodoForm({ create }: Props) {
+const TodoForm: React.FC<Props> = ({ create }) => {
   const [todo, setTodo] = useState<{ 
     title: string, 
     body: string 
@@ -47,6 +47,6 @@ function TodoForm({ create }: Props) {
       <Button onClick={addNewTodo}>Create todo</Button>
     </form>
   )
-}
+};
 
 export default TodoForm;

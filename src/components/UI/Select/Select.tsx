@@ -4,26 +4,26 @@ import { IOption } from '../../../types/types';
 import './Select.sass';
 
 interface Props {
-    defaultValue: string,
-    options: IOption[],
-    value: string,
-    onChange: (event: string) => void
+    options: IOption[];
+    value?: string;
+    noValueLabel?: string;
+    onChange: (event: string) => void;
 }
 
-function Select({ options, defaultValue, value, onChange }: Props) {
+const Select: React.FC<Props> = ({ options, value, noValueLabel, onChange }) => {
   return (
     <select 
-        value={value}
-        onChange={(event: React.ChangeEvent<HTMLSelectElement>) => onChange(event.target.value)}
+      value={value}
+      onChange={(event: React.ChangeEvent<HTMLSelectElement>) => onChange(event.target.value)}
     >
-        <option disabled value="">{defaultValue}</option>
-        {options.map((option: IOption) =>
-            <option key={option.value} value={option.value}>
-                {option.name}
-            </option>
-        )}
+      {noValueLabel && <option value="">{noValueLabel}</option>}
+      {options.map((option: IOption, idx) =>
+        <option key={idx} value={option.value}>
+          {option.name}
+        </option>
+      )}
     </select>
   )
-}
+};
 
 export default Select;

@@ -5,12 +5,12 @@ import Button from '../UI/Button/Button';
 import './TodoItem.sass';
 
 interface Props {
-    todo: ITodoItem,
-    number: number,
-    remove: (todo: ITodoItem) => void
+    number: number;
+    todo: ITodoItem;
+    remove: (todo: ITodoItem) => void;
 }
 
-function TodoItem({ number, todo, remove }: Props) {
+const TodoItem: React.FC<Props> = ({ number, todo, remove }) => {
   return (
     <div className="todo">
         <div className="todo__content">
@@ -27,6 +27,6 @@ function TodoItem({ number, todo, remove }: Props) {
         </div>
     </div>
   )
-}
+};
 
 export default TodoItem;

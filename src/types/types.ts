@@ -5,6 +5,6 @@ export interface ITodoItem {
 }
 
 export interface IOption {
-    value: string,
+    value?: string,
     name: string
 }

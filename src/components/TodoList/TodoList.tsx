@@ -5,12 +5,12 @@ import TodoItem from '../TodoItem/TodoItem';
 import './TodoList.sass';
 
 interface Props {
-    todos: ITodoItem[],
-    title: string,
-    remove: (todo: ITodoItem) => void
+  title: string;
+  todos: ITodoItem[];
+  remove: (todo: ITodoItem) => void;
 }
 
-function TodoList({ todos, title, remove }: Props) {
+const TodoList: React.FC<Props> = ({ todos, title, remove }) => {
   return (
     <>
         <h1 className="title">{title}</h1>
@@ -21,6 +21,6 @@ function TodoList({ todos, title, remove }: Props) {
         }
     </>
   )
-}
+};
 
 export default TodoList;

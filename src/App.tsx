@@ -7,21 +7,20 @@ import './App.sass';
 import Select from './components/UI/Select/Select';
 import Input from './components/UI/Input/Input';
 
-function App() {
+type SortFieldType = "title" | "body";
+
+const App: React.FC = () => {
   const [todos, setTodos] = useState<ITodoItem[]>([
-    {id: 1, title: "aa", body: "bb"},
-    {id: 2, title: "bb 2", body: "aa"},
-    {id: 3, title: "vv 3", body: "vv"}
+    {id: 1, title: "c", body: "b"},
+    {id: 2, title: "b", body: "c"},
+    {id: 3, title: "a", body: "a"}
   ]);
-  const [selectedSort, setSelectedSort] = useState<string>("");
+  const [selectedSort, setSelectedSort] = useState<SortFieldType>();
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const sortedTodos = useMemo(() => {
     if(selectedSort) {
-      return [...todos].sort((a, b) => 
-        (a[selectedSort as keyof ITodoItem] as string)
-          .localeCompare(b[selectedSort as keyof ITodoItem] as string)
-      )
+      return [...todos].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]));
     }
     return todos;
   }, [selectedSort, todos]);
@@ -35,7 +34,7 @@ function App() {
   }
 
   const sortTodos = (sort: string) => {
-    setSelectedSort(sort);
+    setSelectedSort(sort as SortFieldType);
   }
 
   return (
@@ -51,9 +50,9 @@ function App() {
             placeholder="Search..."
           />
           <Select
-            value={selectedSort}
+            value={selectedSort as string}
             onChange={sortTodos}
-            defaultValue="Sort"
+            noValueLabel="Select Sort"
             options={[
               { value: "title", name: "By name" },
               { value: "body", name: "By description" }
