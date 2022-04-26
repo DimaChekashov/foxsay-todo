@@ -14,8 +14,11 @@ function TodoItem({ number, todo, remove }: Props) {
   return (
     <div className="todo">
         <div className="todo__content">
-            <strong>{number}. {todo.title}</strong>
-            <div>
+            <div className="todo__title">
+                <span className="todo__num">{number}.</span> 
+                {todo.title}
+            </div>
+            <div className="todo__text">
                 {todo.body}
             </div>
         </div>
