@@ -3,3 +3,8 @@ export interface ITodoItem {
     title: string,
     body: string
 }
+
+export interface IOption {
+    value: string,
+    name: string
+}
