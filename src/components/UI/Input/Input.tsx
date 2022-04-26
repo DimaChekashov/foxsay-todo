@@ -3,12 +3,13 @@ import React from 'react';
 import './Input.sass';
 
 interface Props {
-
+    type: "text" | "number" | "password",
+    placeholder?: string
 }
 
 function Input(props: Props) {
   return (
-    <input />
+    <input className="input" {...props} />
   )
 }
 
