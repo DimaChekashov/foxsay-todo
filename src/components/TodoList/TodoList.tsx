@@ -6,14 +6,19 @@ import './TodoList.sass';
 
 interface Props {
     todos: ITodoItem[],
-    title: string
+    title: string,
+    remove: (todo: ITodoItem) => void
 }
 
-function TodoList({ todos, title }: Props) {
+function TodoList({ todos, title, remove }: Props) {
   return (
     <>
         <h1 className="title">{title}</h1>
-        {todos.map((todo, index) => <TodoItem number={++index} key={todo.id} todo={todo} />)}
+
+        {todos.length !== 0
+          ? todos.map((todo, index) => <TodoItem remove={remove} number={++index} key={todo.id} todo={todo} />)
+          : <div className="empty-title">Todo is empty!</div>
+        }
     </>
   )
 }

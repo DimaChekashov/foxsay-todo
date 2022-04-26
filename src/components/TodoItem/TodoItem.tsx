@@ -1,24 +1,26 @@
 import React from 'react';
 import { ITodoItem } from '../../types/types';
+import Button from '../UI/Button/Button';
 
 import './TodoItem.sass';
 
 interface Props {
     todo: ITodoItem,
-    number: number
+    number: number,
+    remove: (todo: ITodoItem) => void
 }
 
-function TodoItem(props: Props) {
+function TodoItem({ number, todo, remove }: Props) {
   return (
     <div className="todo">
         <div className="todo__content">
-            <strong>{props.number}. {props.todo.title}</strong>
+            <strong>{number}. {todo.title}</strong>
             <div>
-                {props.todo.body}
+                {todo.body}
             </div>
         </div>
         <div className="todo__btns">
-            <button>Delete</button>
+            <Button onClick={() => remove(todo)}>Delete</Button>
         </div>
     </div>
   )
