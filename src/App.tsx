@@ -1,13 +1,10 @@
 import React, { useMemo, useState } from 'react';
-import { ITodoItem } from './types/types';
+import { ITodoItem, SortFieldType } from './types/types';
 import TodoList from './components/TodoList/TodoList';
 import TodoForm from './components/TodoForm/TodoForm';
+import TodoFilter from './components/TodoFilter/TodoFilter';
 
 import './App.sass';
-import Select from './components/UI/Select/Select';
-import Input from './components/UI/Input/Input';
-
-type SortFieldType = "title" | "body";
 
 const App: React.FC = () => {
   const [todos, setTodos] = useState<ITodoItem[]>([
@@ -25,6 +22,10 @@ const App: React.FC = () => {
     return todos;
   }, [selectedSort, todos]);
 
+  const sortedAndSearchedTodos = useMemo(() => {
+    return sortedTodos.filter(todo => todo.title.toLowerCase().includes(searchQuery));
+  }, [searchQuery, sortedTodos]);
+
   const createTodo = (newTodo: ITodoItem) => {
     setTodos([...todos, newTodo]);
   }
@@ -33,34 +34,14 @@ const App: React.FC = () => {
     setTodos(todos.filter(t => t.id !== todo.id));
   }
 
-  const sortTodos = (sort: string) => {
-    setSelectedSort(sort as SortFieldType);
-  }
-
   return (
     <div className="app">
       <div className="container">
         <TodoForm create={createTodo} />
 
-        <div>
-          <Input 
-            type="text"
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-            placeholder="Search..."
-          />
-          <Select
-            value={selectedSort as string}
-            onChange={sortTodos}
-            noValueLabel="Select Sort"
-            options={[
-              { value: "title", name: "By name" },
-              { value: "body", name: "By description" }
-            ]}
-          />
-        </div>
+        <TodoFilter filter={{ sort: selectedSort, query: searchQuery }} setFilter={{ setSelectedSort, setSearchQuery}} />
 
-        <TodoList remove={removeTodo} todos={sortedTodos} title="Todo List" />
+        <TodoList remove={removeTodo} todos={sortedAndSearchedTodos} title="Todo List" />
       </div>
     </div>
   );

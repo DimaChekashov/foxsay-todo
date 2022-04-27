@@ -8,3 +8,5 @@ export interface IOption {
     value?: string,
     name: string
 }
+
+export type SortFieldType = "title" | "body";
