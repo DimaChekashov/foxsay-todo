@@ -13,6 +13,7 @@ interface Props {
 const Select: React.FC<Props> = ({ options, value, noValueLabel, onChange }) => {
   return (
     <select 
+      className="select"
       value={value}
       onChange={(event: React.ChangeEvent<HTMLSelectElement>) => onChange(event.target.value)}
     >
