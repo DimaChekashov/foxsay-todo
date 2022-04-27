@@ -5,6 +5,8 @@ import TodoForm from './components/TodoForm/TodoForm';
 import TodoFilter from './components/TodoFilter/TodoFilter';
 
 import './App.sass';
+import Modal from './components/UI/Modal/Modal';
+import Button from './components/UI/Button/Button';
 
 const App: React.FC = () => {
   const [todos, setTodos] = useState<ITodoItem[]>([
@@ -14,6 +16,7 @@ const App: React.FC = () => {
   ]);
   const [selectedSort, setSelectedSort] = useState<SortFieldType>();
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [modal, setModal] = useState<boolean>(false);
 
   const sortedTodos = useMemo(() => {
     if(selectedSort) {
@@ -28,6 +31,7 @@ const App: React.FC = () => {
 
   const createTodo = (newTodo: ITodoItem) => {
     setTodos([...todos, newTodo]);
+    setModal(false);
   }
 
   const removeTodo = (todo: ITodoItem) => {
@@ -36,12 +40,27 @@ const App: React.FC = () => {
 
   return (
     <div className="app">
-      <div className="container">
+      <Modal visible={modal} setVisible={setModal}>
         <TodoForm create={createTodo} />
+      </Modal>
+      <div className="container">
+        <Button onClick={() => setModal(true)}>Create Todo</Button>
+        <TodoFilter 
+          filter={{ 
+            sort: selectedSort, 
+            query: searchQuery 
+          }} 
+          setFilter={{ 
+            setSelectedSort, 
+            setSearchQuery
+          }} 
+        />
 
-        <TodoFilter filter={{ sort: selectedSort, query: searchQuery }} setFilter={{ setSelectedSort, setSearchQuery}} />
-
-        <TodoList remove={removeTodo} todos={sortedAndSearchedTodos} title="Todo List" />
+        <TodoList 
+          title="Todo List" 
+          remove={removeTodo} 
+          todos={sortedAndSearchedTodos} 
+        />
       </div>
     </div>
   );
