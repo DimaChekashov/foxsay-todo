@@ -7,9 +7,10 @@ import './TodoForm.sass';
 
 interface Props {
   create: (newTodo: ITodoItem) => void;
+  title: string;
 }
 
-const TodoForm: React.FC<Props> = ({ create }) => {
+const TodoForm: React.FC<Props> = ({ create, title }) => {
   const [todoTitle, setTodoTitle] = useState<string>("");
 
   const addNewTodo = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -26,6 +27,7 @@ const TodoForm: React.FC<Props> = ({ create }) => {
 
   return (
     <form className="todo-form">
+      <h1 className="title">{title}</h1>
       <Input
         value={todoTitle}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTodoTitle(e.target.value)}

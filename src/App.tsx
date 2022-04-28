@@ -37,7 +37,7 @@ const App: React.FC = () => {
   return (
     <div className="app">
       <div className="container">
-        <TodoForm create={createTodo} />
+        <TodoForm title="Todo List"  create={createTodo} />
         <TodoFilter 
           filter={{ 
             sort: selectedSort, 
@@ -50,7 +50,6 @@ const App: React.FC = () => {
         />
 
         <TodoList 
-          title="Todo List" 
           remove={removeTodo} 
           todos={sortedAndSearchedTodos}
         />
