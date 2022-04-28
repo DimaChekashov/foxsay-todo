@@ -5,18 +5,15 @@ import TodoForm from './components/TodoForm/TodoForm';
 import TodoFilter from './components/TodoFilter/TodoFilter';
 
 import './App.sass';
-import Modal from './components/UI/Modal/Modal';
-import Button from './components/UI/Button/Button';
 
 const App: React.FC = () => {
   const [todos, setTodos] = useState<ITodoItem[]>([
-    {id: 1, title: "c", body: "b"},
+    {id: 1, title: "Создать задачу", body: "Создать задачуb"},
     {id: 2, title: "b", body: "c"},
     {id: 3, title: "a", body: "a"}
   ]);
   const [selectedSort, setSelectedSort] = useState<SortFieldType>();
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [modal, setModal] = useState<boolean>(false);
 
   const sortedTodos = useMemo(() => {
     if(selectedSort) {
@@ -31,7 +28,6 @@ const App: React.FC = () => {
 
   const createTodo = (newTodo: ITodoItem) => {
     setTodos([...todos, newTodo]);
-    setModal(false);
   }
 
   const removeTodo = (todo: ITodoItem) => {
@@ -40,11 +36,8 @@ const App: React.FC = () => {
 
   return (
     <div className="app">
-      <Modal visible={modal} setVisible={setModal}>
-        <TodoForm create={createTodo} />
-      </Modal>
       <div className="container">
-        <Button onClick={() => setModal(true)}>Create Todo</Button>
+        <TodoForm create={createTodo} />
         <TodoFilter 
           filter={{ 
             sort: selectedSort, 
