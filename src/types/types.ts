@@ -1,7 +1,7 @@
 export interface ITodoItem {
     id: number,
     title: string,
-    body: string
+    isReady: boolean
 }
 
 export interface IOption {
@@ -9,4 +9,4 @@ export interface IOption {
     name: string
 }
 
-export type SortFieldType = "title" | "body";
+export type SortFieldType = "title";

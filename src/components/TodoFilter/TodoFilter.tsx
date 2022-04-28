@@ -31,7 +31,6 @@ const TodoFilter: React.FC<Props> = ({ filter, setFilter }) => {
         noValueLabel="Select Sort"
         options={[
           { value: "title", name: "By name" },
-          { value: "body", name: "By description" }
         ]}
       />
     </div>
