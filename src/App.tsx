@@ -8,9 +8,7 @@ import './App.sass';
 
 const App: React.FC = () => {
   const [todos, setTodos] = useState<ITodoItem[]>([
-    {id: 1, title: "Создать задачу", isReady: false},
-    {id: 2, title: "b", isReady: false},
-    {id: 3, title: "a", isReady: false}
+    {id: 1, title: "Need create a new todo!", isReady: false}
   ]);
   const [selectedSort, setSelectedSort] = useState<SortFieldType>();
   const [searchQuery, setSearchQuery] = useState<string>("");

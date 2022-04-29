@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ITodoItem } from "../../types/types";
+import Alert from "../UI/Alert/Alert";
 import Button from "../UI/Button/Button";
 import Input from "../UI/Input/Input";
 
@@ -12,17 +13,22 @@ interface Props {
 
 const TodoForm: React.FC<Props> = ({ create, title }) => {
   const [todoTitle, setTodoTitle] = useState<string>("");
-
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+ 
   const addNewTodo = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    create({
-      id: Date.now(),
-      title: todoTitle,
-      isReady: false
-    });
-
-    setTodoTitle("");
+    if(todoTitle) {
+      create({
+        id: Date.now(),
+        title: todoTitle,
+        isReady: false
+      });
+      setTodoTitle("");
+    } else {
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 3000);
+    }
   }
 
   return (
@@ -35,6 +41,9 @@ const TodoForm: React.FC<Props> = ({ create, title }) => {
         placeholder="Todo title"
       />
       <Button onClick={addNewTodo}>Create todo</Button>
+      <Alert show={showAlert}>
+        Please fill the field!
+      </Alert>
     </form>
   )
 };
