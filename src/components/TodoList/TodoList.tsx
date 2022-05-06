@@ -8,9 +8,10 @@ import './TodoList.sass';
 interface Props {
   todos: ITodoItem[];
   remove: (todo: ITodoItem) => void;
+  ready: (todo: ITodoItem) => void;
 }
 
-const TodoList: React.FC<Props> = ({ todos, remove }) => {
+const TodoList: React.FC<Props> = ({ todos, remove, ready }) => {
   return (
     <>
       {todos.length !== 0
@@ -21,7 +22,7 @@ const TodoList: React.FC<Props> = ({ todos, remove }) => {
                 timeout={500}
                 classNames="todo"
               >
-                <TodoItem remove={remove} number={++index} todo={todo} />
+                <TodoItem remove={remove} ready={ready} number={++index} todo={todo} />
               </CSSTransition>
             ))}
           </TransitionGroup>

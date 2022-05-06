@@ -32,6 +32,10 @@ const App: React.FC = () => {
     setTodos(todos.filter(t => t.id !== todo.id));
   }
 
+  const completeTodo = (todo: ITodoItem) => {
+    setTodos(todos.map(t => t.id !== todo.id ? t : {...todo, isReady: !todo.isReady}));
+  }
+
   return (
     <div className="app">
       <div className="container">
@@ -48,7 +52,8 @@ const App: React.FC = () => {
         />
 
         <TodoList 
-          remove={removeTodo} 
+          remove={removeTodo}
+          ready={completeTodo}
           todos={sortedAndSearchedTodos}
         />
       </div>
