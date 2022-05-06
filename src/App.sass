@@ -1,5 +1,10 @@
 @import "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
 
+:root
+  --color-primary: #0d6efd
+  --color-primary-dark: #0b5ed7
+  --color-danger: #dc3545
+
 *
   margin: 0
   padding: 0
@@ -8,16 +13,12 @@
 body
   font-family: 'Poppins', sans-serif
   overflow: hidden
+  background-color: var(--color-primary)
 
 .container
   max-width: 800px
   padding: 0 15px
   margin: 0 auto
-
-:root
-  --color-primary: #0d6efd
-  --color-primary-dark: #0b5ed7
-  --color-danger: #dc3545
 
 .app
   padding: 30px 0
@@ -25,3 +26,10 @@ body
 .title
   font-size: 40px
   white-space: nowrap
+
+.todo-container
+  background-color: #ffffff
+  border-radius: 20px
+  border: 1px solid #eeeeee
+  padding: 10px 20px 10px
+  box-shadow: 0 10px 20px 1px rgba(0,0,0,0.2)

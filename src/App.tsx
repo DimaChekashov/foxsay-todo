@@ -39,23 +39,25 @@ const App: React.FC = () => {
   return (
     <div className="app">
       <div className="container">
-        <TodoForm title="Todo List"  create={createTodo} />
-        <TodoFilter 
-          filter={{ 
-            sort: selectedSort, 
-            query: searchQuery 
-          }} 
-          setFilter={{ 
-            setSelectedSort, 
-            setSearchQuery
-          }} 
-        />
+        <div className="todo-container">
+          <TodoForm title="Todo List"  create={createTodo} />
+          <TodoFilter 
+            filter={{ 
+              sort: selectedSort, 
+              query: searchQuery 
+            }} 
+            setFilter={{ 
+              setSelectedSort, 
+              setSearchQuery
+            }} 
+          />
 
-        <TodoList 
-          remove={removeTodo}
-          ready={completeTodo}
-          todos={sortedAndSearchedTodos}
-        />
+          <TodoList 
+            remove={removeTodo}
+            ready={completeTodo}
+            todos={sortedAndSearchedTodos}
+          />
+        </div>
       </div>
     </div>
   );
