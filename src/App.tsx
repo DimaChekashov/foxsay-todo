@@ -1,8 +1,9 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { ITodoItem, SortFieldType } from './types/types';
 import TodoList from './components/TodoList/TodoList';
 import TodoForm from './components/TodoForm/TodoForm';
 import TodoFilter from './components/TodoFilter/TodoFilter';
+import Todos from './store/Todos';
 
 import './App.sass';
 
@@ -26,6 +27,7 @@ const App: React.FC = () => {
 
   const createTodo = (newTodo: ITodoItem) => {
     setTodos([...todos, newTodo]);
+    Todos.addTodo(newTodo);
   }
 
   const removeTodo = (todo: ITodoItem) => {
@@ -55,7 +57,7 @@ const App: React.FC = () => {
           <TodoList 
             remove={removeTodo}
             ready={completeTodo}
-            todos={sortedAndSearchedTodos}
+            todos={Todos.todos}
           />
         </div>
       </div>
