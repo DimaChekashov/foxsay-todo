@@ -4,6 +4,7 @@ import TodoItem from '../TodoItem/TodoItem';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import './TodoList.sass';
+import { observer } from 'mobx-react-lite';
 
 interface Props {
   todos: ITodoItem[];
@@ -11,7 +12,7 @@ interface Props {
   ready: (todo: ITodoItem) => void;
 }
 
-const TodoList: React.FC<Props> = ({ todos, remove, ready }) => {
+const TodoList: React.FC<Props> = observer(({ todos, remove, ready }) => {
   return (
     <>
       {todos.length !== 0
@@ -30,6 +31,6 @@ const TodoList: React.FC<Props> = ({ todos, remove, ready }) => {
       }
     </>
   )
-};
+});
 
 export default TodoList;
