@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { ITodoItem, SortFieldType } from '../../types/types';
 import TodoItem from '../TodoItem/TodoItem';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { observer } from 'mobx-react-lite';
 
 import './TodoList.sass';
-import { observer } from 'mobx-react-lite';
 
 interface Props {
   todos: ITodoItem[];
@@ -15,6 +15,11 @@ interface Props {
 }
 
 const TodoList: React.FC<Props> = observer(({ todos, remove, ready, searchQuery, selectedSort }) => {
+  const [todoList, setTodoList] = useState<ITodoItem[]>(todos);
+
+  useEffect(() => {
+    setTodoList(todos)
+  }, [todos]);
 
   const sortedTodos = useMemo(() => {
     if(selectedSort) {
@@ -23,16 +28,15 @@ const TodoList: React.FC<Props> = observer(({ todos, remove, ready, searchQuery,
     return todos;
   }, [selectedSort, todos]);
 
-  const sortedAndSearchedTodos = useMemo(() => {
-    console.log(sortedTodos);
-    return sortedTodos.filter(todo => todo.title.toLowerCase().includes(searchQuery));
+  useMemo(() => {
+    setTodoList(sortedTodos.filter(todo => todo.title.toLowerCase().includes(searchQuery.toLowerCase())));
   }, [searchQuery, sortedTodos]);
 
   return (
     <>
-      {todos.length !== 0
+      {todoList.length !== 0
         ? <TransitionGroup>
-            {sortedAndSearchedTodos.map((todo, index) => (
+            {todoList.map((todo, index) => (
               <CSSTransition
                 key={todo.id}
                 timeout={500}
