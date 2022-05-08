@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { ITodoItem, SortFieldType } from './types/types';
 import TodoList from './components/TodoList/TodoList';
 import TodoForm from './components/TodoForm/TodoForm';
@@ -12,28 +12,11 @@ const App: React.FC = observer(() => {
   const [selectedSort, setSelectedSort] = useState<SortFieldType>();
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const sortedTodos = useMemo(() => {
-    if(selectedSort) {
-      return [...Todos.todos].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]));
-    }
-    return Todos.todos;
-  }, [selectedSort]);
-
-  const sortedAndSearchedTodos = useMemo(() => {
-    return sortedTodos.filter(todo => todo.title.toLowerCase().includes(searchQuery));
-  }, [searchQuery, sortedTodos]);
-
-  const createTodo = (newTodo: ITodoItem) => {
-    Todos.addTodo(newTodo);
-  }
-
-  const removeTodo = (todo: ITodoItem) => {
-    Todos.removeTodo(todo);
-  }
-
-  const completeTodo = (todo: ITodoItem) => {
-    Todos.completeTodo(todo);
-  }
+  const completeTodo = (todo: ITodoItem) => Todos.completeTodo(todo);
+  
+  const createTodo = (newTodo: ITodoItem) => Todos.addTodo(newTodo);
+  
+  const removeTodo = (todo: ITodoItem) => Todos.removeTodo(todo);
 
   return (
     <div className="app">
@@ -54,6 +37,8 @@ const App: React.FC = observer(() => {
             remove={removeTodo}
             ready={completeTodo}
             todos={Todos.todos}
+            selectedSort={selectedSort}
+            searchQuery={searchQuery}
           />
         </div>
       </div>
