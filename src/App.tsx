@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ITodoItem, SortFieldType } from './types/types';
 import TodoList from './components/TodoList/TodoList';
 import TodoForm from './components/TodoForm/TodoForm';
@@ -11,6 +11,13 @@ import './App.sass';
 const App: React.FC = observer(() => {
   const [selectedSort, setSelectedSort] = useState<SortFieldType>();
   const [searchQuery, setSearchQuery] = useState<string>("");
+
+  useEffect(() => {
+    const todos = JSON.parse(localStorage.getItem('todos')!);
+    if(todos) {
+      Todos.loadLocalTodos(todos);
+    }
+  }, []);
 
   const completeTodo = (todo: ITodoItem) => Todos.completeTodo(todo);
   
