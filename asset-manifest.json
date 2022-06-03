@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/foxsay-todo/static/css/main.85492a00.css",
+    "main.js": "/foxsay-todo/static/js/main.cca98c24.js",
+    "index.html": "/foxsay-todo/index.html",
+    "main.85492a00.css.map": "/foxsay-todo/static/css/main.85492a00.css.map",
+    "main.cca98c24.js.map": "/foxsay-todo/static/js/main.cca98c24.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.85492a00.css",
+    "static/js/main.cca98c24.js"
+  ]
+}
