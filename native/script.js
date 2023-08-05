@@ -45,6 +45,10 @@ class DomManipulator {
         domElement.classList.add(className);
     }
 
+    removeClass(domElement, className) {
+        domElement.classList.remove(className);
+    }
+
     setAttr(dom, attributes) {
         if(!attributes) return;
 
@@ -61,6 +65,45 @@ class DomManipulator {
 }
 
 class TodoItem {
+    constructor(parentBlock, title, status) {
+        this._item = dom.createElement("div", "todo-item", parentBlock)
+        this.todoText = dom.createElement("div", "todo-item__text", this._item);
+        this._todoCompleteBtn = dom.createElement("button", ["todo-item__btn", "todo-item__btn_complete"], this._item, "&#10003;", "type:button");
+        this._todoDeleteBtn = dom.createElement("button", ["todo-item__btn", "todo-item__btn_delete"], this._item, "&#10006;", "type:button");
+        this.title = title;
+        this.status = status;
+
+        this.init();
+    }
+
+    init() {
+        dom.setText(this.todoText, this.title);
+    }
+
+    updateStatus(status) {
+        this.status = status;
+
+        if(status) {
+            dom.addClass(this._item, "completed");
+        } else {
+            dom.removeClass(this._item, "completed");
+        }
+    }
+
+    get completeBtnDom() {
+        return this._todoCompleteBtn;
+    }
+
+    get deleteBtnDom() {
+        return this._todoDeleteBtn;
+    }
+}
+
+class Search {
+    constructor(parentBlock) {
+        this.container = dom.createElement("div", "todo-search", parentBlock);
+        this._searchInput = dom.createElement("input", "todo-search__input", this.container, null, ["type:text", "placeholder:Search..."]);
+    }
 }
 
 class Footer {
@@ -85,64 +128,56 @@ class TodoApp {
         this._todos = todos;
         this.mainBlock = dom.createElement("div", "todo", root);
         this.header = dom.createElement("div", "todo-header", this.mainBlock);
-        this.searchBlock = dom.createElement("div", "todo-search", this.mainBlock);
+        this.searchBlock = new Search(this.mainBlock);
         this.body = dom.createElement("div", "todo-body", this.mainBlock);
         this.footer = new Footer(this.mainBlock);
     }
 
     init() {
         dom.setText(this.header, this._name);
-        this.fillSearchBlock();
         this.loadTodos();
-        this.addTodo();
+        this.footerActions();
     }
 
     loadTodos() {
-        this._todos.forEach((todo, index) => {
-            this.createTodo(todo, index);
-        });
+        this._todos = this._todos.map((todo, index) => ({...todo, dom: this.createTodo(todo, index)}));
     }
 
     createTodo(todo, index) {
-        const todoItem = dom.createElement("div", "todo-item", this.body);
-        const todoText = dom.createElement("div", "todo-item__text", todoItem);
-        const todoCompleteBtn = dom.createElement("button", ["todo-item__btn", "todo-item__btn_complete"], todoItem, "&#10003;", "type:button");
-        const todoDeleteBtn = dom.createElement("button", ["todo-item__btn", "todo-item__btn_delete"], todoItem, "&#10006;", "type:button");
-        
-        dom.setText(todoText, todo.title);
-        
-        if(todo.status) dom.addClass(todoItem, "completed");
+        const todoItem = new TodoItem(this.body, todo.title, this._todos[index].status);
 
-        todoCompleteBtn.addEventListener("click", () => {
-            this._todos[index].status = !todo.status;
+        todoItem.completeBtnDom.addEventListener("click", () => {
+            this._todos[index].status = !this._todos[index].status;
+            todoItem.updateStatus(this._todos[index].status);
+        });
+
+        todoItem.deleteBtnDom.addEventListener("click", () => {
+            this._todos = this._todos.filter((elem) => elem !== this._todos[index]);
             this.render();
         });
 
-        todoDeleteBtn.addEventListener("click", () => {
-            this._todos = this._todos.filter((elem) => elem !== this._todos[index]);
-            this.render();
-        })
+        return todoItem;
     }
 
     deleteTodos() {
         dom.deleteChildNodes(this.body);
     }
 
-    fillSearchBlock() {
-        const searchInput = dom.createElement("input", "todo-search__input", this.searchBlock, null, ["type:text", "placeholder:Search..."]);
-    }
-
-    addTodo() {
+    footerActions() {
         this.footer.addBtnDom.addEventListener("click", () => {
-            if(!this.footer.inputDom.length) {
-                this._todos.push({
-                    title: this.footer.inputDom.value,
-                    status: false,
-                });
+            if(this.footer.inputDom.value !== "") {
+                this.addTodo(this.footer.inputDom.value);
                 this.footer.inputDom.value = "";
                 this.render();
             }
-        })
+        });
+    }
+
+    addTodo(title) {
+        this._todos.push({
+            title,
+            status: false,
+        });
     }
 
     render() {
