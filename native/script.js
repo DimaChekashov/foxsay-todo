@@ -168,7 +168,7 @@ class TodoApp {
         });
 
         todoItem.deleteBtnDom.addEventListener("click", () => {
-            this._todos = this._todos.filter((elem) => elem !== this._todos[index]);
+            this._todos = this.shadowTodos = this._todos.filter((elem) => elem !== this._todos[index]);
             this.database.updateTodos(this.shadowTodos)
                 .then(() => {
                     this.render();
@@ -198,8 +198,6 @@ class TodoApp {
 
     searchActions() {
         this.searchBlock.searchInputDom.addEventListener("input", (e) => {
-            console.log("Main:", this._todos);
-            console.log("Shadow:", this.shadowTodos);
             this.searchQuery = e.target.value;
             this.updateTodosBySeach();
             this.render();
@@ -289,7 +287,7 @@ let appName = "Learn JavaScript";
 const db = new TodosData("Learn JavaScript");
 const root = document.getElementById("root");
 const dom = new DomManipulator();
-// [{title: "Do homework", status: false}, {title: "Learn datatypes", status: false}]
+
 const todoApp = new TodoApp(appName, db);
 
 todoApp.init();
