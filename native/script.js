@@ -73,6 +73,7 @@ class TodoItem {
         this.title = title;
         this.status = status;
 
+        this.updateStatus(status);
         this.init();
     }
 
@@ -104,6 +105,10 @@ class Search {
         this.container = dom.createElement("div", "todo-search", parentBlock);
         this._searchInput = dom.createElement("input", "todo-search__input", this.container, null, ["type:text", "placeholder:Search..."]);
     }
+
+    get searchInputDom() {
+        return this._searchInput;
+    }
 }
 
 class Footer {
@@ -126,17 +131,20 @@ class TodoApp {
     constructor(name, todos) {
         this._name = name;
         this._todos = todos;
+        this.shadowTodos = todos;
         this.mainBlock = dom.createElement("div", "todo", root);
         this.header = dom.createElement("div", "todo-header", this.mainBlock);
         this.searchBlock = new Search(this.mainBlock);
         this.body = dom.createElement("div", "todo-body", this.mainBlock);
         this.footer = new Footer(this.mainBlock);
+        this.searchQuery = "";
     }
 
     init() {
         dom.setText(this.header, this._name);
         this.loadTodos();
         this.footerActions();
+        this.searchActions()
     }
 
     loadTodos() {
@@ -147,7 +155,7 @@ class TodoApp {
         const todoItem = new TodoItem(this.body, todo.title, this._todos[index].status);
 
         todoItem.completeBtnDom.addEventListener("click", () => {
-            this._todos[index].status = !this._todos[index].status;
+            this._todos[index].status = this.shadowTodos[index].status = !this._todos[index].status;
             todoItem.updateStatus(this._todos[index].status);
         });
 
@@ -167,13 +175,32 @@ class TodoApp {
         this.footer.addBtnDom.addEventListener("click", () => {
             if(this.footer.inputDom.value !== "") {
                 this.addTodo(this.footer.inputDom.value);
+                this.updateTodosBySeach();
                 this.footer.inputDom.value = "";
                 this.render();
             }
         });
     }
 
+    searchActions() {
+        this.searchBlock.searchInputDom.addEventListener("input", (e) => {
+            console.log("Main:", this._todos);
+            console.log("Shadow:", this.shadowTodos);
+            this.searchQuery = e.target.value;
+            this.updateTodosBySeach();
+            this.render();
+        })
+    }
+
+    updateTodosBySeach() {
+        this._todos = this.shadowTodos.filter((todo) => todo.title.toLowerCase().includes(this.searchQuery.toLowerCase()));
+    }
+
     addTodo(title) {
+        this.shadowTodos.push({
+            title,
+            status: false,
+        });
         this._todos.push({
             title,
             status: false,
