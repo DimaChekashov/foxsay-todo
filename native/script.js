@@ -128,10 +128,11 @@ class Footer {
 }
 
 class TodoApp {
-    constructor(name, todos) {
+    constructor(name, db) {
         this._name = name;
-        this._todos = todos;
-        this.shadowTodos = todos;
+        this.database = db;
+        this._todos = [];
+        this.shadowTodos = [];
         this.mainBlock = dom.createElement("div", "todo", root);
         this.header = dom.createElement("div", "todo-header", this.mainBlock);
         this.searchBlock = new Search(this.mainBlock);
@@ -142,7 +143,13 @@ class TodoApp {
 
     init() {
         dom.setText(this.header, this._name);
-        this.loadTodos();
+
+        this.database.loadData()
+            .then((data) => {
+                this._todos = data;
+                this.shadowTodos = data;
+                this.loadTodos();
+            });
         this.footerActions();
         this.searchActions()
     }
@@ -157,11 +164,15 @@ class TodoApp {
         todoItem.completeBtnDom.addEventListener("click", () => {
             this._todos[index].status = this.shadowTodos[index].status = !this._todos[index].status;
             todoItem.updateStatus(this._todos[index].status);
+            this.database.updateTodos(this.shadowTodos);
         });
 
         todoItem.deleteBtnDom.addEventListener("click", () => {
             this._todos = this._todos.filter((elem) => elem !== this._todos[index]);
-            this.render();
+            this.database.updateTodos(this.shadowTodos)
+                .then(() => {
+                    this.render();
+                })
         });
 
         return todoItem;
@@ -175,9 +186,12 @@ class TodoApp {
         this.footer.addBtnDom.addEventListener("click", () => {
             if(this.footer.inputDom.value !== "") {
                 this.addTodo(this.footer.inputDom.value);
-                this.updateTodosBySeach();
-                this.footer.inputDom.value = "";
-                this.render();
+                this.database.updateTodos(this.shadowTodos)
+                    .then(() => {
+                        this.updateTodosBySeach();
+                        this.footer.inputDom.value = "";
+                        this.render();
+                    })
             }
         });
     }
@@ -229,8 +243,53 @@ class TodoApp {
     }
 }
 
+class TodosData {
+    constructor(appName) {
+        this.appName = appName;
+        this._data;
+    }
+
+    async loadData() {
+        let todos = localStorage.getItem("todos");
+
+        if(!todos) {
+            localStorage.setItem("todos", "{}");
+
+            return [];
+        } else {
+            todos = await JSON.parse(todos);
+
+            if(todos[this.appName] === undefined) {
+                todos[this.appName] = [];
+            }
+
+            return todos[this.appName];
+        }
+    }
+
+    async updateTodos(todos) {
+        let localTodos = localStorage.getItem("todos");
+
+        localTodos = await JSON.parse(localTodos);
+
+        localTodos[appName] = todos;
+
+        localTodos = await JSON.stringify(localTodos);
+
+        localStorage.setItem("todos", localTodos);
+    }
+
+    get data() {
+        return this._data;
+    }
+}
+
+let appName = "Learn JavaScript";
+
+const db = new TodosData("Learn JavaScript");
 const root = document.getElementById("root");
 const dom = new DomManipulator();
-const todoApp = new TodoApp("Learn JavaScript", [{title: "Do homework", status: false}, {title: "Learn datatypes", status: false}]);
+// [{title: "Do homework", status: false}, {title: "Learn datatypes", status: false}]
+const todoApp = new TodoApp(appName, db);
 
 todoApp.init();
