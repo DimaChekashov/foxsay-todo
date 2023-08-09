@@ -156,6 +156,9 @@ class TodoApp {
 
     loadTodos() {
         this._todos = this._todos.map((todo, index) => ({...todo, dom: this.createTodo(todo, index)}));
+        if(this._todos.length === 0) {
+            dom.createElement("div", "todo-plug", this.body, "Todo is Empty...");
+        }
     }
 
     createTodo(todo, index) {

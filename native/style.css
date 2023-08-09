@@ -105,3 +105,9 @@ button:focus {
 .todo-item__btn_delete {
     background-color: var(--delete-color);
 }
+
+.todo-plug {
+    font-size: 20px;
+    text-align: center;
+    padding: 35px 0;
+}
