@@ -46,7 +46,8 @@ button:focus {
     transform: scale(1.1);
 }
 
-.todo {
+.todo,
+.choice-todo {
     background-color: var(--white);
     max-width: 600px;
     padding: 15px;
