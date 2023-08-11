@@ -288,6 +288,7 @@ class TodosData {
 class ChoiceTodoApp {
     constructor (apps) {
         this.container = dom.createElement("div", "choice-todo", root);
+        this.body = dom.createElement("div", "todo-body", this.container);
         this.footer = dom.createElement("div", "todo-footer", this.container);
         this._todoNameInput = dom.createElement("input", "todo-input", this.footer, null, ["type:text", "placeholder:Type container name..."]);
         this._todoAddItemBtn = dom.createElement("button", "todo-add", this.footer, "Create Container", "type:button");
@@ -295,7 +296,18 @@ class ChoiceTodoApp {
     }
 
     init() {
+        this.loadItems();
+    }
 
+    loadItems() {
+        this.createItem("JavaScript");
+    }
+
+    createItem(title) {
+        dom.createElement("div", "choice-todo-item", this.body, title);
+        dom.createElement("div", "choice-todo-item", this.body, title);
+        dom.createElement("div", "choice-todo-item", this.body, title);
+        dom.createElement("div", "choice-todo-item", this.body, title);
     }
 }
 
@@ -306,6 +318,8 @@ const root = document.getElementById("root");
 const dom = new DomManipulator();
 
 const choice = new ChoiceTodoApp();
+
+choice.init();
 
 // const todoApp = new TodoApp(appName, db);
 
