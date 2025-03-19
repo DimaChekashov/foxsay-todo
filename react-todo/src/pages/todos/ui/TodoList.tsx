@@ -7,7 +7,7 @@ export const TodoList = () => {
 
 	return (
 		<div className="flex flex-col gap-6">
-			{todos.map((todo) => <TodoCard key={todo.id} todo={todo} />)}
+			{todos.map((todo) => <TodoCard key={todo._id} todo={todo} />)}
 		</div>
 	);
 }

@@ -1,5 +1,6 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { Todo } from ".";
+import { getTodos } from "../api/todoApi";
 
 type TodosContextType = {
 	todos: Todo[],
@@ -16,23 +17,12 @@ export const TodosContext = createContext<TodosContextType>({
 });
 
 export const TodosProvider = ({children}: {children: React.ReactNode}) => {
-	const [todos, setTodos] = useState<Todo[]>([
-		{
-			id: 1,
-			title: "Text 1",
-			isReady: false
-		},
-		{
-			id: 2,
-			title: "Text 2",
-			isReady: true
-		},
-		{
-			id: 3,
-			title: "Text 3",
-			isReady: false
-		},
-	]);
+	const [todos, setTodos] = useState<Todo[]>([]);
+
+	useEffect(() => {
+		getTodos()
+			.then(data => setTodos(data));
+	}, []);
 
 	const createTodo = (todoTitle: string) => {
 	
