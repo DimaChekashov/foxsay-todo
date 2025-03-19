@@ -1,12 +1,13 @@
+import { useContext } from "react";
 import { TodoCard } from "./TodoCard";
+import { TodosContext } from "../model/TodosContext";
 
 export const TodoList = () => {
+	const {todos} = useContext(TodosContext);
+
 	return (
 		<div className="flex flex-col gap-6">
-			<TodoCard id={1} title="Task 1" isReady={false}  />
-			<TodoCard id={2} title="Task 2" isReady={false}  />
-			<TodoCard id={3} title="Task 3" isReady={true}  />
-			<TodoCard id={4} title="Task 4" isReady={false}  />
+			{todos.map((todo) => <TodoCard key={todo.id} id={todo.id} title={todo.title} isReady={todo.isReady}  />)}
 		</div>
 	);
 }
