@@ -7,7 +7,7 @@ router.get("/todos", getTodos);
 
 router.post("/todos", createTodo);
 
-router.patch("/todos", updateIsReady);
+router.put("/todos", updateIsReady);
 
 router.delete("/todos", deleteTodo);
 

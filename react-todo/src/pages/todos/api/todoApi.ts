@@ -16,5 +16,12 @@ export const createTodoQuery = async (todoTitle: string) => {
 }
 
 export const updateIsReadyTodoQuery = async (todoId: string, todoIsReady: boolean) => {
-	
+	return await fetch(`${API_URL}/todos/`, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({_id: todoId, isReady: todoIsReady})
+	})
+		.then(res => res.json());
 }

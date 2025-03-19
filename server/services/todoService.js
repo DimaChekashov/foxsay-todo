@@ -9,7 +9,7 @@ export const getTodos = async () => {
 }
 
 export const updateIsReady = async (todoId, isReady) => {
-	return await Todo.findByIdAndUpdate(todoId, {isReady});
+	return await Todo.findByIdAndUpdate(todoId, {isReady}, {new: true});
 }
 
 export const deleteTodo = async (todoId) => {

@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { Todo } from ".";
-import { getTodosQuery, createTodoQuery } from "../api/todoApi";
+import { getTodosQuery, createTodoQuery, updateIsReadyTodoQuery } from "../api/todoApi";
 
 type TodosContextType = {
 	todos: Todo[],
@@ -30,7 +30,8 @@ export const TodosProvider = ({children}: {children: React.ReactNode}) => {
 	}
 
 	const updateIsReadyTodo = (todoId: string, isReady: boolean) => {
-
+		updateIsReadyTodoQuery(todoId, isReady)
+			.then(data => setTodos(todos.map(todo => todo._id === todoId ? data : todo)));
 	}
 
 	const deleteTodo = (todoId: string) => {
