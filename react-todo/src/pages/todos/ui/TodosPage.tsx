@@ -1,13 +1,11 @@
-import { useContext } from "react";
+import { TodoForm } from "./TodoForm";
 import { TodoList } from "./TodoList";
-import { TodosContext } from "../model";
 
 export const TodosPage = () => {
-	const {createTodo} = useContext(TodosContext);
 	return (
 		<>
+			<TodoForm />
 			<TodoList />
-			<button onClick={() => createTodo("Text 2")}>Add Todo</button>
 		</>
 	);
 }
