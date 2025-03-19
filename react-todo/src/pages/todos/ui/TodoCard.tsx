@@ -8,7 +8,7 @@ type TodoCardProps = {
 }
 
 export const TodoCard = ({todo}: TodoCardProps) => {
-	const {updateIsReadyTodo} = useContext(TodosContext);
+	const {updateIsReadyTodo, deleteTodo} = useContext(TodosContext);
 	const {title, isReady} = todo;
 	
 	return (
@@ -23,7 +23,15 @@ export const TodoCard = ({todo}: TodoCardProps) => {
 				>
 					{isReady ? "Выполнено" : "Не выполнено"}
 				</Button>
-				<Button color="danger" variant="filled" size="large" icon={<DeleteOutlined />}>Удалить</Button>
+				<Button 
+					color="danger" 
+					variant="filled" 
+					size="large" 
+					icon={<DeleteOutlined />}
+					onClick={() => deleteTodo(todo._id)}
+				>
+					Удалить
+				</Button>
 			</div>
 		</Card>
 	);

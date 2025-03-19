@@ -25,3 +25,14 @@ export const updateIsReadyTodoQuery = async (todoId: string, todoIsReady: boolea
 	})
 		.then(res => res.json());
 }
+
+export const deleteTodoQuery = async (todoId: string) => {
+	return await fetch(`${API_URL}/todos`, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({_id: todoId})
+	})
+		.then(res => res.json());
+}
