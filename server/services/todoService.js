@@ -7,3 +7,11 @@ export const createTodo = async (todoData) => {
 export const getTodos = async () => {
 	return await Todo.find();
 }
+
+export const updateIsReady = async (todoId, isReady) => {
+	return await Todo.findByIdAndUpdate(todoId, {isReady});
+}
+
+export const deleteTodo = async (todoId) => {
+	return await Todo.findByIdAndDelete(todoId);
+}

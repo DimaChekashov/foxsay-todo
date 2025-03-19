@@ -17,3 +17,21 @@ export const getTodos = async (req, res) => {
 		res.status(500).json({error: error.message});
 	}
 }
+
+export const updateIsReady = async (req, res) => {
+	try {
+		const todo = await todoService.updateIsReady(req.body._id, req.body.isReady);
+		res.status(200).json(todo);
+	} catch (error) {
+		res.status(500).json({error: error.message});
+	}
+}
+
+export const deleteTodo = async (req, res) => {
+	try {
+		const todo =  await todoService.deleteTodo(req.body._id);
+		res.status(200).json(todo);
+	} catch (error) {
+		res.status(500).json({error: error.message});
+	}
+}
