@@ -3,10 +3,10 @@ import { Todo } from ".";
 import { getTodosQuery, createTodoQuery, updateIsReadyTodoQuery, deleteTodoQuery } from "../api/todoApi";
 
 type TodosContextType = {
-	todos: Todo[],
-	createTodo: (todoTitle: string) => void,
-	updateIsReadyTodo: (todoId: string, isReady: boolean) => void,
-	deleteTodo: (todoId: string) => void
+	todos: Todo[];
+	createTodo: (title: Todo["title"]) => void;
+	updateIsReadyTodo: (idAndIsReady: Omit<Todo, "title">) => void;
+	deleteTodo: (id: Todo["_id"]) => void;
 }
 
 export const TodosContext = createContext<TodosContextType>({
@@ -24,18 +24,18 @@ export const TodosProvider = ({children}: {children: React.ReactNode}) => {
 			.then(data => setTodos(data));
 	}, []);
 
-	const createTodo = (todoTitle: string) => {
-		createTodoQuery(todoTitle)
+	const createTodo = (title: Todo["title"]) => {
+		createTodoQuery(title)
 			.then(data => setTodos([...todos, data]));
 	}
 
-	const updateIsReadyTodo = (todoId: string, isReady: boolean) => {
-		updateIsReadyTodoQuery(todoId, isReady)
+	const updateIsReadyTodo = (idAndIsReady: Omit<Todo, "title">) => {
+		updateIsReadyTodoQuery(idAndIsReady)
 			.then(data => setTodos(todos.map(todo => todo._id === data._id ? data : todo)));
 	}
 
-	const deleteTodo = (todoId: string) => {
-		deleteTodoQuery(todoId)
+	const deleteTodo = (id: Todo["_id"]) => {
+		deleteTodoQuery(id)
 			.then(data => setTodos(todos.filter(todo => todo._id !== data._id)));
 	}
 

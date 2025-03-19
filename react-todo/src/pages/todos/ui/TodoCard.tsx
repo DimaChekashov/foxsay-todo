@@ -9,7 +9,7 @@ type TodoCardProps = {
 
 export const TodoCard = ({todo}: TodoCardProps) => {
 	const {updateIsReadyTodo, deleteTodo} = useContext(TodosContext);
-	const {title, isReady} = todo;
+	const {_id, title, isReady} = todo;
 	
 	return (
 		<Card title={title} style={{ opacity: isReady ? 0.5 : 1}}>
@@ -19,7 +19,7 @@ export const TodoCard = ({todo}: TodoCardProps) => {
 					variant="solid" 
 					size="large" 
 					icon={isReady ? <CheckOutlined /> : <CloseOutlined />}
-					onClick={() => updateIsReadyTodo(todo._id, !isReady)}
+					onClick={() => updateIsReadyTodo({_id: _id,  isReady: !isReady})}
 				>
 					{isReady ? "Выполнено" : "Не выполнено"}
 				</Button>
@@ -28,7 +28,7 @@ export const TodoCard = ({todo}: TodoCardProps) => {
 					variant="filled" 
 					size="large" 
 					icon={<DeleteOutlined />}
-					onClick={() => deleteTodo(todo._id)}
+					onClick={() => deleteTodo(_id)}
 				>
 					Удалить
 				</Button>
