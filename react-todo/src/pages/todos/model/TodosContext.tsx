@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { Todo } from "./types";
+import { Todo } from ".";
 
 type TodosContextType = {
 	todos: Todo[],

@@ -1,10 +1,10 @@
-import { TodosProvider } from "../../pages/todos/model/TodosContext";
+import { TodosProvider } from "../../pages/todos/model";
 
-type ProvidersProps = {
+type ProvidersType = {
 	children: React.ReactNode;
 }
 
-export const Providers = ({children}: ProvidersProps) => {
+export const Providers = ({children}: ProvidersType) => {
 	return (
 		<TodosProvider>
 			{children}
