@@ -1,0 +1,17 @@
+{
+  "name": "foxsay-todo-server",
+  "version": "0.1.0",
+  "private": true,
+  "author": {
+    "name": "Dmitry Chekashov",
+    "email": "foxdima99@gmail.com",
+    "url": "https://fox-say.ru"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
