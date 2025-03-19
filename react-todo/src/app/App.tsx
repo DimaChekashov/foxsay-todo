@@ -1,10 +1,10 @@
-import { Button } from "antd";
+import { TodosPage } from "../pages/todos";
 
 function App() {
   return (
-    <div>
-      <h1 className="font-bold text-3xl">App</h1>
-      <Button>Hello world!</Button>
+    <div className="max-w-lg mx-auto pt-12">
+      <h1 className="font-bold text-3xl mb-6">React Todos</h1>
+      <TodosPage />
     </div>
   );
 }
