@@ -1,12 +1,12 @@
 import { createContext, useEffect, useState } from "react";
 import { Todo } from ".";
-import { getTodos } from "../api/todoApi";
+import { getTodosQuery, createTodoQuery } from "../api/todoApi";
 
 type TodosContextType = {
 	todos: Todo[],
 	createTodo: (todoTitle: string) => void,
-	updateIsReadyTodo: (todoId: number, isReady: boolean) => void,
-	deleteTodo: (todoId: number) => void
+	updateIsReadyTodo: (todoId: string, isReady: boolean) => void,
+	deleteTodo: (todoId: string) => void
 }
 
 export const TodosContext = createContext<TodosContextType>({
@@ -20,19 +20,20 @@ export const TodosProvider = ({children}: {children: React.ReactNode}) => {
 	const [todos, setTodos] = useState<Todo[]>([]);
 
 	useEffect(() => {
-		getTodos()
+		getTodosQuery()
 			.then(data => setTodos(data));
 	}, []);
 
 	const createTodo = (todoTitle: string) => {
-	
+		createTodoQuery(todoTitle)
+			.then(data => setTodos([...todos, data]));
 	}
 
-	const updateIsReadyTodo = (todoId: number, isReady: boolean) => {
+	const updateIsReadyTodo = (todoId: string, isReady: boolean) => {
 
 	}
 
-	const deleteTodo = (todoId: number) => {
+	const deleteTodo = (todoId: string) => {
 		
 	}
 
