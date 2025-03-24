@@ -72,6 +72,20 @@ func (r *TodoRepository) UpdateIsReady(todo models.Todo) error {
 	return nil
 }
 
-// func (r *TodoRepository) DeleteTodo(todoId primitive.ObjectID) error {
+func (r *TodoRepository) DeleteTodo(id primitive.ObjectID) (*models.Todo, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
 
-// }
+	todo := &models.Todo{}
+	err := r.collection.FindOne(ctx, bson.M{"_id": id}).Decode(todo)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = r.collection.DeleteOne(ctx, bson.M{"_id": id})
+	if err != nil {
+		return nil, err
+	}
+
+	return todo, nil
+}

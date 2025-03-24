@@ -6,6 +6,7 @@ import (
 	"go-server/repositories"
 	"net/http"
 
+	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -66,6 +67,31 @@ func (c *TodoController) UpdateIsReady(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(todo)
 }
 
-// func (c *TodoController) DeleteTodo(w http.ResponseWriter, r *http.Request) {
+func (c *TodoController) DeleteTodo(w http.ResponseWriter, r *http.Request) {
+	var request struct {
+		ID string `json:"id"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 
-// }
+	id, err := primitive.ObjectIDFromHex(request.ID)
+	if err != nil {
+		http.Error(w, "Invalid ID format", http.StatusBadRequest)
+		return
+	}
+
+	todo, err := c.repo.DeleteTodo(id)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			http.Error(w, "Todo not found", http.StatusNotFound)
+		} else {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(todo)
+}
