@@ -6,7 +6,7 @@ import (
 	"go-server/repositories"
 	"net/http"
 
-	// "github.com/gorilla/mux"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type TodoController struct {
@@ -24,6 +24,7 @@ func (c *TodoController) GetTodos(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(todos)
 }
 
@@ -44,9 +45,26 @@ func (c *TodoController) CreateTodo(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(created)
 }
 
-// func (c *TodoController) UpdateIsReady(w http.ResponseWriter, r *http.Request) {
+func (c *TodoController) UpdateIsReady(w http.ResponseWriter, r *http.Request) {
+	var todo models.Todo
+	if err := json.NewDecoder(r.Body).Decode(&todo); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 
-// }
+	if todo.ID == primitive.NilObjectID {
+		http.Error(w, "Invalid ID", http.StatusBadRequest)
+		return
+	}
+
+	if err := c.repo.UpdateIsReady(todo); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(todo)
+}
 
 // func (c *TodoController) DeleteTodo(w http.ResponseWriter, r *http.Request) {
 
