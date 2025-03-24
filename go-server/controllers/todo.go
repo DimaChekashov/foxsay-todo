@@ -14,7 +14,7 @@ type TodoController struct {
 	repo *repositories.TodoRepository
 }
 
-func NewTodoRepository(repo *repositories.TodoRepository) *TodoController {
+func NewTodoController(repo *repositories.TodoRepository) *TodoController {
 	return &TodoController{repo: repo}
 }
 

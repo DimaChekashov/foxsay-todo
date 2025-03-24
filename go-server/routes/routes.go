@@ -10,12 +10,14 @@ import (
 func SetupRoutes() *mux.Router {
 	router := mux.NewRouter()
 	repo := repositories.NewTodoRepository()
-	controllers := controllers.NewTodoRepository(repo)
+	controllers := controllers.NewTodoController(repo)
 
-	router.HandleFunc("/todos", controllers.GetTodos).Methods("GET")
-	router.HandleFunc("/todos", controllers.CreateTodo).Methods("POST")
-	router.HandleFunc("/todos", controllers.UpdateIsReady).Methods("PUT")
-	router.HandleFunc("/todos", controllers.DeleteTodo).Methods("DELETE")
+	apiRouter := router.PathPrefix("/api").Subrouter()
+
+	apiRouter.HandleFunc("/todos", controllers.GetTodos).Methods("GET")
+	apiRouter.HandleFunc("/todos", controllers.CreateTodo).Methods("POST")
+	apiRouter.HandleFunc("/todos", controllers.UpdateIsReady).Methods("PUT")
+	apiRouter.HandleFunc("/todos", controllers.DeleteTodo).Methods("DELETE")
 
 	return router
 }
