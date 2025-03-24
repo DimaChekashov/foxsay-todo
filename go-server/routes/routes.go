@@ -3,7 +3,6 @@ package routes
 import (
 	"go-server/controllers"
 	"go-server/repositories"
-	// "net/http"
 
 	"github.com/gorilla/mux"
 )

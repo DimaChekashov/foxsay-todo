@@ -6,8 +6,8 @@ import (
 	"go-server/repositories"
 	"net/http"
 
-	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type TodoController struct {
