@@ -17,10 +17,10 @@ func SetupRoutes() *mux.Router {
 
 	apiRouter := router.PathPrefix("/api").Subrouter()
 
-	apiRouter.HandleFunc("/todos", controllers.GetTodos).Methods("GET")
-	apiRouter.HandleFunc("/todos", controllers.CreateTodo).Methods("POST")
-	apiRouter.HandleFunc("/todos", controllers.UpdateIsReady).Methods("PUT")
-	apiRouter.HandleFunc("/todos", controllers.DeleteTodo).Methods("DELETE")
+	apiRouter.HandleFunc("/todos", controllers.GetTodos).Methods("GET", "OPTIONS")
+	apiRouter.HandleFunc("/todos", controllers.CreateTodo).Methods("POST", "OPTIONS")
+	apiRouter.HandleFunc("/todos", controllers.UpdateIsReady).Methods("PUT", "OPTIONS")
+	apiRouter.HandleFunc("/todos", controllers.DeleteTodo).Methods("DELETE", "OPTIONS")
 
 	return router
 }

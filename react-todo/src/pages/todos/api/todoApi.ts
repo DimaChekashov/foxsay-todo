@@ -18,7 +18,7 @@ export const createTodoQuery = async (title: Todo["title"]): Promise<Todo> => {
 }
 
 export const updateIsReadyTodoQuery = async (idAndIsReady: Omit<Todo, "title">): Promise<Todo> => {
-	return await fetch(`${API_URL}/todos/`, {
+	return await fetch(`${API_URL}/todos`, {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json"

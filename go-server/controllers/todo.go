@@ -69,7 +69,7 @@ func (c *TodoController) UpdateIsReady(w http.ResponseWriter, r *http.Request) {
 
 func (c *TodoController) DeleteTodo(w http.ResponseWriter, r *http.Request) {
 	var request struct {
-		ID string `json:"id"`
+		ID string `json:"_id"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
