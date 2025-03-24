@@ -7,7 +7,7 @@ import (
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	// "go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type TodoRepository struct {
@@ -39,9 +39,17 @@ func (r *TodoRepository) GetTodos() ([]models.Todo, error) {
 	return todos, nil
 }
 
-// func (r *TodoRepository) CreateTodo(todo models.Todo) (*models.Todo, error) {
+func (r *TodoRepository) CreateTodo(todo models.Todo) (*models.Todo, error) {
+	ctx := context.Background()
 
-// }
+	result, err := r.collection.InsertOne(ctx, todo)
+	if err != nil {
+		return nil, err
+	}
+
+	todo.ID = result.InsertedID.(primitive.ObjectID)
+	return &todo, nil
+}
 
 // func (r *TodoRepository) UpdateIsReady(todo models.Todo) (*models.Todo, error) {
 
