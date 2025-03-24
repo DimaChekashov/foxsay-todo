@@ -31,7 +31,7 @@ export const TodosProvider = ({children}: {children: React.ReactNode}) => {
 
 	const updateIsReadyTodo = (idAndIsReady: Omit<Todo, "title">) => {
 		updateIsReadyTodoQuery(idAndIsReady)
-			.then(data => setTodos(todos.map(todo => todo._id === data._id ? data : todo)));
+			.then(data => setTodos(todos.map(todo => todo._id === data._id ? { ...data, title: todo.title } : todo)));
 	}
 
 	const deleteTodo = (id: Todo["_id"]) => {
