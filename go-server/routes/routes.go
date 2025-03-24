@@ -2,6 +2,7 @@ package routes
 
 import (
 	"go-server/controllers"
+	"go-server/middleware"
 	"go-server/repositories"
 
 	"github.com/gorilla/mux"
@@ -11,6 +12,8 @@ func SetupRoutes() *mux.Router {
 	router := mux.NewRouter()
 	repo := repositories.NewTodoRepository()
 	controllers := controllers.NewTodoController(repo)
+
+	router.Use(cors.CorsMiddleware)
 
 	apiRouter := router.PathPrefix("/api").Subrouter()
 
