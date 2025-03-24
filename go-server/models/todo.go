@@ -1,7 +1,9 @@
 package models
 
+import "go.mongodb.org/mongo-driver/bson/primitive"
+
 type Todo struct {
-	ID      string `bson:"_id",omitempty`
-	Title   string `bson:"title"`
-	IsReady bool   `bson:"isReady"`
+	ID      primitive.ObjectID `json:"id,omitempty" bson:"_id,omitempty"`
+	Title   string             `json:"title" bson:"title""`
+	IsReady bool               `json:"isReady" bson:"isReady"`
 }
