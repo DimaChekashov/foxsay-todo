@@ -27,10 +27,10 @@ func (r *TodoRepository) CreateTodo(todo models.Todo) (*models.Todo, error) {
 
 }
 
-func (r *TodoRepository) updateIsReady(todo models.Todo) (*models.Todo, error) {
+func (r *TodoRepository) UpdateIsReady(todo models.Todo) (*models.Todo, error) {
 
 }
 
-func (r *TodoRepository) deleteTodo(todoId primitive.ObjectID) error {
+func (r *TodoRepository) DeleteTodo(todoId primitive.ObjectID) error {
 
 }
