@@ -1,4 +1,4 @@
 export class CreateTodoDto {
   title: string;
-  isReady: boolean;
+  isReady?: boolean = false;
 }
