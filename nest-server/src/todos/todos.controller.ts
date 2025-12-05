@@ -14,7 +14,7 @@ import { Todo } from './entities/todo.entity';
 import { DeleteTodoDto } from './dto/delete-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 
-@Controller('todos')
+@Controller('api/todos')
 export class TodosController {
   constructor(private todosService: TodosSerice) {}
 
@@ -35,8 +35,7 @@ export class TodosController {
   }
 
   @Delete()
-  @HttpCode(HttpStatus.NO_CONTENT)
-  async deleteTodo(@Body() deleteTodoDto: DeleteTodoDto) {
+  async deleteTodo(@Body() deleteTodoDto: DeleteTodoDto): Promise<Todo> {
     return this.todosService.deleteTodo(deleteTodoDto);
   }
 }

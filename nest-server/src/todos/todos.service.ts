@@ -48,7 +48,19 @@ export class TodosSerice {
     return updatedTodo;
   }
 
-  async deleteTodo(deleteTodoDto: DeleteTodoDto) {
-    return await this.todosRepository.delete({ _id: deleteTodoDto._id });
+  async deleteTodo(deleteTodoDto: DeleteTodoDto): Promise<Todo> {
+    const todo = await this.todosRepository.findOne({
+      where: { _id: deleteTodoDto._id },
+    });
+
+    if (!todo) {
+      throw new NotFoundException(
+        `Todo with ID "${deleteTodoDto._id}" not found`,
+      );
+    }
+
+    await this.todosRepository.delete({ _id: deleteTodoDto._id });
+
+    return todo;
   }
 }
